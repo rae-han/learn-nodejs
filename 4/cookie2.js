@@ -26,6 +26,18 @@ http.createServer(async (req, res) => {
       'Set-Cookie': `name=${encodeURIComponent(name)}; Expires=${expires.toGMTString()}; HttpOnly; Path=/`
     });
     res.end();
+  } else if (cookies.name) {
+    res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end(`${cookies.name}님 안녕하세요`);
+  } else {
+    try {
+      const data = await fs.readFile('./cookie2.html');
+      res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end(data)
+    } catch (error) {
+      res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end(error.message)
+    }
   }
 }).listen(8084, () => {
   console.log('on 8084')

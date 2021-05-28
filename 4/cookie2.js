@@ -16,11 +16,13 @@ http.createServer(async (req, res) => {
   const cookies = parseCookies(req.headers.cookie)
 
   if(req.url.startsWith('/login')) {
-    const query = url.parse(req.url);
+    const { query } = url.parse(req.url);
     const { name } = qs.parse(query);
     const expires = new Date();
 
-    expires.setMinutes(expries.getMinutes() + 5);
+    expires.setMinutes(expires.getMinutes() + 5);
+
+    console.log(name)
 
     res.writeHead(302, {
       Location: '/',

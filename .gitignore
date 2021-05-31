@@ -3,3 +3,8 @@ nodejs-book-master
 ./nodejs-book-master/
 /nodejs-book-master/
 /nodejs-book-master/
+
+/node_modules/
+*/node_modules
+*/node_modules/
+*/node_modules/*

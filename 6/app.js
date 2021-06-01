@@ -10,11 +10,14 @@ app.use((req, res, next) => {
 })
 app.get('/', (req, res, next) => {
   console.log('GET / 요청에서만 실행');
+  next();
 }, (req, res) => {
-  throw new Error('에러처리 미들웨어')
+  console.log('에러가 있을 때')
+  throw new Error('에러처리 미들웨어로')
 })
 
 app.use((err, req, res, next) => {
+  console.log('# error')
   console.error(err);
   res.status(500).send(err.message);
 })

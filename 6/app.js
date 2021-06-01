@@ -34,9 +34,10 @@ app.use((req, res, next) => {
 })
 app.get('/', (req, res, next) => {
   console.log('GET / 요청에서만 실행');
+  req.data = '데이터 넣기'
   next();
 }, (req, res) => {
-  console.log('에러가 있을 때')
+  console.log(req.data)
   throw new Error('에러처리 미들웨어로')
 })
 

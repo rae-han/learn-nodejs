@@ -1,17 +1,11 @@
 doctype html
-  html(lang="en")
-    head
-      meta(charset="UTF-8")
-      meta(http-equiv="X-UA-Compatible", content="IE=edge")
-      meta(name="viewport", content="width=device-width, initial-scale=1.0")
-      title Document
-    body 
-      h1= message
-      p #{error.status}
-      p #{error.stack}
-      input(class=title, placeholder=content+' 연습')
-      p= '<strong>이스케이프</strong>'
-      p!= '<strong>낫 이스케이프</strong>'
-      ul
-        each fruit, index in ['apple', 'orange', 'banana', 'peach', 'pear']
-          li= `${index+1} 번째 ` + fruit
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Document
+  body 
+    h1= message
+    p #{error.status}
+    p #{error.stack}

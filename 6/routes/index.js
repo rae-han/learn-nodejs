@@ -25,7 +25,9 @@ router.route('/abc')
     console.log('get', req.get);
     // console.log('get()', req.get());
 
-    res.send('GET /abc');
+    // res.send('GET /abc');
+    res.locals.title = 'Express'
+    res.render('main', { content: 'Express' })
   })
   .post((req, res) => {
     res.send('POST /abc')

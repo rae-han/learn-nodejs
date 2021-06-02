@@ -4,7 +4,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const dotenv = require('dotenv');
 const path = require('path');
-
+const multer = require('multer');
+const fs = require('fs');
 dotenv.config();
 
 const app = express();
@@ -28,17 +29,44 @@ app.use(session({
   name: 'seesion-cookie',
 }))
 
+try {
+  fs.readdirSync('uploads');
+} catch (error) {
+  console.error('upload folder created why ? not found');
+  fs.mkdirSync('uploads')
+}
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, done) {
+      done(null, 'uploads/');
+    },
+    filename(req, file, done) {
+      const ext = path.extname(file.originalname);
+      done(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    },
+  }),
+  limits: { fileSize : 10*1024*1024 },
+})
+
 app.use((req, res, next) => {
   console.log('모든 요청에 다 실행됩니다.');
   next();
 })
-app.get('/', (req, res, next) => {
+app.get('/', (req, res, next) => { 
   console.log('GET / 요청에서만 실행');
   req.data = '데이터 넣기'
   next();
 }, (req, res) => {
   console.log(req.data)
   throw new Error('에러처리 미들웨어로')
+})
+app.get('/upload', (req, res) => {
+  res.sendFile(path.join(__dirname, 'multipart.html'));
+});
+app.post('/upload', upload.fields([{ name: 'image1' }, { name: 'image2' }]), (req, res) => {
+  console.log(req.files, req.body);
+  res.send('ok');
 })
 
 app.use((err, req, res, next) => {
@@ -50,4 +78,3 @@ app.use((err, req, res, next) => {
 app.listen(app.get('port'), () => {
   console.log(app.get('port'), 'port')
 });
-

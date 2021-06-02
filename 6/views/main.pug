@@ -11,3 +11,6 @@ html(lang="en")
     input(class=title, placeholder=content+' 연습')
     p= '<strong>이스케이프</strong>'
     p!= '<strong>낫 이스케이프</strong>'
+    ul
+      each fruit, index in ['apple', 'orange', 'banana', 'peach', 'pear']
+        li= `${index+1} 번째 ` + fruit

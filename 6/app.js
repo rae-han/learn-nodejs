@@ -8,6 +8,10 @@ const multer = require('multer');
 const fs = require('fs');
 dotenv.config();
 
+// routers
+const indexRouter = require('./routes')
+const userRouter = require('./routes/user')
+
 const app = express();
 
 app.set('port', process.env.PORT || 3000);
@@ -28,6 +32,9 @@ app.use(session({
   },
   name: 'seesion-cookie',
 }))
+
+// app.use('/', indexRouter);
+// app.use('/user', userRouter);
 
 try {
   fs.readdirSync('uploads');
@@ -56,10 +63,12 @@ app.use((req, res, next) => {
 app.get('/', (req, res, next) => { 
   console.log('GET / 요청에서만 실행');
   req.data = '데이터 넣기'
-  next();
-}, (req, res) => {
+  // next();
+  next('route');
+}, (req, res, next) => {
   console.log(req.data)
-  throw new Error('에러처리 미들웨어로')
+  // throw new Error('에러처리 미들웨어로')
+  // next();
 })
 app.get('/upload', (req, res) => {
   res.sendFile(path.join(__dirname, 'multipart.html'));
@@ -68,6 +77,9 @@ app.post('/upload', upload.fields([{ name: 'image1' }, { name: 'image2' }]), (re
   console.log(req.files, req.body);
   res.send('ok');
 })
+
+app.use('/', indexRouter);
+app.use('/user', userRouter);
 
 app.use((err, req, res, next) => {
   console.log('# error')

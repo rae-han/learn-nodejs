@@ -47,7 +47,8 @@ SHOW TABLES;
 INSERT INTO nodejs.users (name, age, married, comment) VALUES ('rae', 27, 0, '자기소개1');
 INSERT INTO nodejs.users (name, age, married, comment) VALUES ('han', 32, 1, '자기소개2');
 
-INSERT INTO nodejs.comments (commenter, comment) VALUES (1, '안녕하세요. rae의 댓글입니다.');
+INSERT INTO nodejs.comments (commenter, comment) VALUES (2, '안녕하세요. han의 댓글입니다.');
+INSERT INTO nodejs.comments (commenter, comment) VALUES (3, '안녕하세요. han의 댓글입니다.');
 
 SELECT * FROM nodejs.users;
 SELECT * FROM nodejs.comments;
@@ -65,3 +66,95 @@ SELECT * FROM nodejs.users ORDER BY age DESC LIMIT 1;
 SELECT * FROM nodejs.users ORDER BY age DESC LIMIT 1 OFFSET 1;
 
 DELETE FROM nodejs.users WHERE id = 1;
+
+# Sequelize
+const { User, Comment } = require('../models');
+
+1. INSERT 
+
+INSERT INTO nodejs.users (name, age, married, comment) VALUES ('han', 30, 0 '자기소개');
+===
+User.create({
+  name: 'han',
+  age: 30,
+  married: false,
+  comment: '자기소개'
+})
+
+2. SELECT 
+
+SELECT * FROM nodejs.users;
+User.findAll({});
+
+SELECT * FROM nodejs.users LIMIT 1;
+User.findOne({});
+
+SELECT name, married FROM nodejs.users;
+User.findAll({
+  attributes: ['name', 'married'],
+})
+
+const { Op } = require('sequelize');
+SELECT name, age FROM nodejs.users WHERE married = 1 AND age > 30;
+User.findAll({
+  attributes: ['name', 'age'],
+  where: {
+    married: true,
+    age: { [Op.gt]: 30 },
+  }
+})
+
+- Op: {
+  gt: 초과
+  gte: 이상
+  lt: 미만
+  lte: 이하
+  ne: 같이 잖음
+  or: 또는
+  in: 배열 요소 중 하나
+  notIn: 배열 요소와 모두 다름
+}
+
+SELECT id, name FROM users WHERE married = 0 OR age > 30;
+User.findAll({
+  attributes: ['id', 'name'],
+  where: {
+    [Op.or]: [{ married: false }, { age: { [Op.gt]: 30 } }],
+  },
+})
+
+SELECT id, name FROM users ORDER BY age DESC;
+User.findAll({
+  attributes: ['id', 'name'],
+  order: [['age', 'DESC]],
+})
+
+SELECT id, name FROM users ORDER BY age DESC LIMIT 1 OFFSET 2;
+User.findAll({
+  attributes: ['id', 'name'],
+  order: [['age', 'DESC']],
+  order: ['age', 'DESC'],
+  limit: 1,
+  offset: 2,
+})
+
+3. UPDATE
+
+UPDATE nodejs.users SET comment = '바꿀 내용' WHERE id=2;
+User.update({
+  comment: '바꿀 내용',
+}, {
+  where: { id: 2 },
+})
+
+4. DELETE
+DELETE FROM nodejs.users WHERE id=2;
+User.destroy({
+  where: { id: 2 },
+})
+
+5.
+const [result, metadata] = await sequelize.query('SELECT * from comments');
+
+
+

@@ -18,6 +18,25 @@ CREATE TABLE nodejs.users(
   created_at DATETIME NOT NULL DEFAULT now(),
   PRIMARY KEY(id),
   UNIQUE INDEX name_UNIQUE (name ASC))
-COMMENT = 'user information'
+COMMENT = '유저 정보'
 DEFAULT CHARACTER SET = utf8
 ENGINE = InnoDB;
+
+DESC users;
+
+DROP TABLE users;
+
+CREATE TABLE nodejs.comments (
+  id INT NOT NULL AUTO_INCREMENT,
+  commenter INT NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT now(),
+  PRIMARY KEY(id),
+  INDEX commenter_idx (commenter ASC),
+  CONSTRAINT commenter
+  FOREIGN KEY (commenter)
+  PEFERENCES nodejs.users (id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE)
+COMMENT = '댓글'
+DEFAULT CHARACTER=utf8mb4
+ENGINE=InnoDB;

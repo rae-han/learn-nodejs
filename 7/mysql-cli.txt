@@ -1,0 +1,23 @@
+brew install mysql
+
+brew services start mysql
+
+mysql_secure_installation
+mysql -h localhost -u root -p
+
+mysql>
+CREATE SCHEMA `nodejs` DEFAULT CHARACTER SET utf8;
+use nodejs;
+
+CREATE TABLE nodejs.users(
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(20) NOT NULL,
+  age INT UNSIGNED NOT NULL,
+  married TINYINT NOT NULL,
+  comment TEXT NULL,
+  created_at DATETIME NOT NULL DEFAULT now(),
+  PRIMARY KEY(id),
+  UNIQUE INDEX name_UNIQUE (name ASC))
+COMMENT = 'user information'
+DEFAULT CHARACTER SET = utf8
+ENGINE = InnoDB;

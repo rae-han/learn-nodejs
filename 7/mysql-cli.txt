@@ -29,14 +29,39 @@ DROP TABLE users;
 CREATE TABLE nodejs.comments (
   id INT NOT NULL AUTO_INCREMENT,
   commenter INT NOT NULL,
+  comment VARCHAR(100) NOT NULL,
   created_at DATETIME NOT NULL DEFAULT now(),
   PRIMARY KEY(id),
   INDEX commenter_idx (commenter ASC),
   CONSTRAINT commenter
   FOREIGN KEY (commenter)
-  PEFERENCES nodejs.users (id)
+  REFERENCES nodejs.users (id)
   ON DELETE CASCADE
   ON UPDATE CASCADE)
 COMMENT = '댓글'
-DEFAULT CHARACTER=utf8mb4
+DEFAULT CHARSET=utf8mb4
 ENGINE=InnoDB;
+
+SHOW TABLES;
+
+INSERT INTO nodejs.users (name, age, married, comment) VALUES ('rae', 27, 0, '자기소개1');
+INSERT INTO nodejs.users (name, age, married, comment) VALUES ('han', 32, 1, '자기소개2');
+
+INSERT INTO nodejs.comments (commenter, comment) VALUES (1, '안녕하세요. rae의 댓글입니다.');
+
+SELECT * FROM nodejs.users;
+SELECT * FROM nodejs.comments;
+
+SELECT name, age FROM nodejs.users;
+
+SELECT name, age FROM nodejs.users WHERE married = 1 AND age > 30;
+
+SELECT name, age FROM nodejs.users WHERE married = 0 OR age > 30;
+
+SELECT * FROM nodejs.users ORDER BY age DESC;
+
+SELECT * FROM nodejs.users ORDER BY age DESC LIMIT 1;
+
+SELECT * FROM nodejs.users ORDER BY age DESC LIMIT 1 OFFSET 1;
+
+DELETE FROM nodejs.users WHERE id = 1;

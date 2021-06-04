@@ -1,0 +1,87 @@
+brew tap mongodb/brew
+brew install mongodb-community
+
+brew services start mongodb-community
+
+mongo
+
+use admin
+db.createUser({ user: 'root', pwd: '1111', roles: ['root'] })
+
+brew services stop mongodb-community
+
+conde or vim /user/local/etc/mongod.conf
++
+security:
+  authorization: enabled
+
+brew services start mongodb-community
+mongo admin -u root -p 1111
+
+brew cask install mongodb-compass-community
+
+// create db
+use nodejs
+
+// db list
+show dbs
+
+// current db
+db
+
+// create collection
+db.createCollection('users');
+db.createCollection('comments');
+
+// collection list
+show collections
+
+// create
+
+db.users.save({ name: 'han', age: 24, married: false, commet: 'hello~!', createAt: new Date() });
+db.users.save({ name: 'rae', age: 30, married: true, commet: 'hi~!', createAt: new Date() });
+
+// read
+
+db.users.find({ name: 'han' }, { _id: 1 }); -> 여기에 나온 아이디를 아래에서 이용
+
+// create
+
+db.comments.save({ commenter: ObjectId("60b9d6c5486e97ba371ac086"), comment: 'hello!, hans comment', createAt: new Date() });
+
+// read
+
+db.users.find({});
+db.comments.find({});
+
+db.users.find({}, { _id: 0, name: 1, married: 1 });
+
+db.users.find({ age: { $gt: 29 }, married: true }, { _id: 0, name: 1, married: 1 });
+
+db.users.find({ $or: [{ age: { $gt: 29 } }, { married: false }] }, { _id: 0, name: 1, married: 1 })
+
+db.users.find({}, { _id: 0, name: 1, married: 1 }).sort({ age: -1 });
+
+db.users.find({}, { _id: 0, name: 1, married: 1 }).sort({ age: -1 }).limit(1);
+
+db.users.find({}, { _id: 0, name: 1, married: 1 }).sort({ age: -1 }).limit(1).skip(1);
+
+// update
+
+db.users.update({ name: 'han' }, { $set: { comment: '안녕? 이 필드를 바꿀게.' }});
+
+// delete
+
+db.users.remove({ name: 'rae' });
+
+// mongoose
+
+npm i express morgan nunjucks mongoose
+npm i -D nodemon
+
+
+
+
+
+
+

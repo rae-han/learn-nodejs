@@ -1,4 +1,4 @@
-const express = requiire('express');
+const express = require('express');
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.get('/profile', (req, res) => {
 })
 
 router.get('/join', (req, res) => {
-  res.render('join', { title: '회원가입 - NodeBird' })
+  res.render('join', { title: '회원가입 - NodeBird' });
 })
 
 router.get('/', (req, res, next) => {

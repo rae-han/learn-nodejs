@@ -14,8 +14,8 @@ app.set('port', process.env.PORT || 8001);
 app.set('view engine', 'html');
 nunjucks.configure('views', {
   express: app,
-  awatch: true,
-})
+  watch: true,
+});
 
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));

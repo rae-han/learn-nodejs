@@ -9,6 +9,7 @@ const passport = require('passport');
 
 dotenv.config();
 const pageRouter = require('./routes/page');
+const authRouter = require('./routes/auth');
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 
@@ -46,6 +47,7 @@ app.use(passport.initialize()); // req 객체에 passport 설정을 심는다.
 app.use(passport.session()); // req.session 객체에 passport 정보를 저장한다., req.session 객체는 express-session에서 생성하는 것이므로 express-session 미들웨어보다 뒤에 연결해야 한다.
 
 app.use('/', pageRouter);
+app.use('/auth', authRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없음.`);
@@ -58,8 +60,8 @@ app.use((err, req, res, next) => {
   res.locals.error = process.env.MODE_ENV !== 'production' ? err : {};
   res.status(err.status || 500);
   res.render('error');
-})
+});
 
 app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기 중');
-})
+});

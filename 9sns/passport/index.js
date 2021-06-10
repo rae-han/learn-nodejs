@@ -1,6 +1,6 @@
 const passport = require('passport');
 const local = require('./localStrategy');
-// const kakao = require('./kakaoStrategy');
+const kakao = require('./kakaoStrategy');
 const User = require('../models/user');
 
 module.exports = () => {
@@ -24,5 +24,5 @@ module.exports = () => {
   // 세션에 불필요한 데이터를 담아두지 않기 위한 과정
 
   local();
-  // kakao();
+  kakao();
 }

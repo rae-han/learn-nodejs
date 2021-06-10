@@ -9,3 +9,5 @@ npm i -D nodemon
 2. npx sequelize db:create
 
 npm i passport passport-local passport-kakao bcrypt
+
+npm i multer

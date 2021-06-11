@@ -14,7 +14,18 @@ module.exports = () => {
   // passport.session 미들웨어가 이 메서드를 호출
   // serializeUser의 done의 두 번째 인수로 넣었던 데이터가 이 함수의 매개변수가 된다.
   passport.deserializeUser((id, done) => {
-    User.findOne({ where: { id } })
+    User.findOne({ 
+      where: { id },
+      include: [{
+        model: User,
+        attributes: ['id', 'nick'],
+        as: 'Followers',
+      }, {
+        model: User,
+        attributes: ['id', 'nick'],
+        as: 'Followings'
+      }]      
+    })
       .then(user => done(null, user))
       .catch(err => done(err))
   });
@@ -26,3 +37,34 @@ module.exports = () => {
   local();
   kakao();
 }
+
+// const passport = require('passport');
+// const local = require('./localStrategy');
+// const kakao = require('./kakaoStrategy');
+// const User = require('../models/user');
+
+// module.exports = () => {
+//   passport.serializeUser((user, done) => {
+//     done(null, user.id);
+//   });
+
+//   passport.deserializeUser((id, done) => {
+//     User.findOne({
+//       where: { id },
+//       include: [{
+//         model: User,
+//         attributes: ['id', 'nick'],
+//         as: 'Followers',
+//       }, {
+//         model: User,
+//         attributes: ['id', 'nick'],
+//         as: 'Followings',
+//       }],
+//     })
+//       .then(user => done(null, user))
+//       .catch(err => done(err));
+//   });
+
+//   local();
+//   kakao();
+// };

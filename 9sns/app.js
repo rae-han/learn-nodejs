@@ -16,7 +16,7 @@ const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 
 const app = express();
-passportConfig();
+passportConfig(); // passport 미들웨어를 통해 local, kakao passport 등록
 app.set('port', process.env.PORT || 8001);
 app.set('view engine', 'html');
 nunjucks.configure('views', {

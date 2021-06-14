@@ -47,7 +47,15 @@ app.use(session({
   },
 }));
 app.use(passport.initialize()); // req 객체에 passport 설정을 심는다.
-app.use(passport.session()); // req.session 객체에 passport 정보를 저장한다., req.session 객체는 express-session에서 생성하는 것이므로 express-session 미들웨어보다 뒤에 연결해야 한다.
+app.use(passport.session()); 
+// req.session 객체에 passport 정보를 저장한다.
+// req.session 객체는 express-session에서 생성하는 것이므로 express-session 미들웨어보다 뒤에 연결해야 한다.
+// ----
+// 로그인 요청에 들어와서 라우터에 도달하기 전에 passport.session 미들웨어가 passport.deserializerUser 메서드를 호출한다.
+// req.session에 저장된 아이디로 데이터베이스에서 사용자 조회를 한다.
+// 조회된 사용자 정보를 req.user에 저장한다.
+// 라우터에서 req.user 객체 사용 가능
+// Passport는 로그인 시의 동작을 전략(strategy)라는 용어로 표현한다.
 
 app.use('/', pageRouter);
 app.use('/auth', authRouter);

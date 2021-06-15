@@ -5,9 +5,11 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
 module.exports = () => {
+  console.log('LocalStrategy')
   passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
+    // 일치하는 로그인 라우터의 req.body 속성명을 적는다.
   }, async (email, password, done) => {
     try {
       const exUser = await User.findOne({ where: { email } });

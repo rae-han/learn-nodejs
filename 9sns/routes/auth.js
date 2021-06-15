@@ -37,6 +37,10 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
     if (!user) {
       return res.redirect(`/?loginError=${info.message}`);
     }
+
+    console.log('req login')
+    // Passport 는 req객체에 login, logout 메서드를 추가한다.
+    // req.login은 passport.serializeUser를 호출한다.
     return req.login(user, (loginError) => {
       if (loginError) {
         console.error(loginError);

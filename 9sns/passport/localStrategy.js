@@ -11,6 +11,8 @@ module.exports = () => {
     passwordField: 'password',
     // 일치하는 로그인 라우터의 req.body 속성명을 적는다.
   }, async (email, password, done) => {
+    console.log('LocalStrategy Callback')
+    console.log(email, password, done)
     try {
       const exUser = await User.findOne({ where: { email } });
       if (exUser) {

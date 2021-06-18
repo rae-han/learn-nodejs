@@ -54,8 +54,8 @@ router.post('/token', async (req, res) => {
   }
 })
 
+// 토큰을 검증하는 미들웨어를 거친 후, 검증이 성공하면 토큰의 내용물을 응답하는 라우터
 router.get('/test', verifyToken, (req, res) => {
-  // 토큰을 검증하는 미들웨어를 거친 후, 검증이 성공하면 토큰의 내용물을 응답하는 라우터
   res.json(req.decoded);
 })
 

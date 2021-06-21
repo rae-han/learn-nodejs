@@ -2,7 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 
 const { verifyToken } = require('./middlewares');
-const { Domain, User } = require('../models');
+const { Domain, User, Post } = require('../models');
 
 const router = express.Router();
 
@@ -54,8 +54,53 @@ router.post('/token', async (req, res) => {
   }
 })
 
+router.get('/posts/my', verifyToken, (req, res) => {
+  Post.findAll({ where: { userId: req.decoded.id } })
+    .then((posts) => {
+      console.log(posts);
+      res.json({
+        code: 200,
+        payload: posts,
+      });
+    })
+    .catch((error) => {
+      console.error(error)
+      return res.status(500).json({
+        code: 500,
+        message: 'Server Error',
+      });
+    });
+});
+
+router.get('/posts/hashtag/:title', verifyToken, async (req, res) => {
+  try {
+    const hashtag = await Hashtag.findOne({ where: { title: req.params.title } });
+    if(!hashtag) {
+      return res.status(404).json({
+        code: 404,
+        message: 'No result to search',
+      });
+    }
+    console.log(hashtag);
+
+    const posts = await hashtag.getPosts();
+
+    return res.json({
+      code: 200,
+      payload: posts,
+    })
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      code: 500,
+      message: 'Server Error'
+    })
+  }
+})
+
 // 토큰을 검증하는 미들웨어를 거친 후, 검증이 성공하면 토큰의 내용물을 응답하는 라우터
 router.get('/test', verifyToken, (req, res) => {
+  console.log('req.decoded', req.decoded)
   res.json(req.decoded);
 })
 

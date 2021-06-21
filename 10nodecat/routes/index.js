@@ -43,7 +43,8 @@ router.get('mypost', async (req, res, next) => {
 
 router.get('/search/:hashtag', async (req, res, next) => {
   try {
-    const result = await request(req, `/posts/hashtag/${}`)
+    console.log(req.params.hashtag)
+    const result = await request(req, `/posts/hashtag/${encodeURIComponent(req.params.hashtag)}`)
   } catch (error) {
     console.error(error);
   }

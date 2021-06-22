@@ -7,7 +7,7 @@ const URL = 'http://localhost:8002/v1';
 
 axios.defaults.headers.origin = 'http://localhost:4000'; // origin 헤더 추가
 
-const request = async (req, res) => {
+const request = async (req, api) => {
   try {
     if(!req.session.jwt) {
       const tokenResult = await axios.post(`${URL}/token`, {
@@ -26,12 +26,12 @@ const request = async (req, res) => {
       return request(req, api);
     } 
     // 419 외의 다른 에러면
-    return error.response
     console.error(error);
+    return error.response
   }
 }
 
-router.get('mypost', async (req, res, next) => {
+router.get('/mypost', async (req, res, next) => {
   try {
     const result = await request(req, '/posts/my');
     res.json(result.data);
@@ -44,7 +44,8 @@ router.get('mypost', async (req, res, next) => {
 router.get('/search/:hashtag', async (req, res, next) => {
   try {
     console.log(req.params.hashtag)
-    const result = await request(req, `/posts/hashtag/${encodeURIComponent(req.params.hashtag)}`)
+    const result = await request(req, `/posts/hashtag/${encodeURIComponent(req.params.hashtag)}`);
+    res.json(result.data)
   } catch (error) {
     console.error(error);
   }

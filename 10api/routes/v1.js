@@ -2,7 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 
 const { verifyToken } = require('./middlewares');
-const { Domain, User, Post } = require('../models');
+const { Domain, User, Post, Hashtag } = require('../models');
 
 const router = express.Router();
 

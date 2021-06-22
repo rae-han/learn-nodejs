@@ -1,14 +1,32 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
+const url = require('url');
 
-const { verifyToken, deprecated } = require('./middlewares');
+const { verifyToken, apiLimiter } = require('./middlewares');
 const { Domain, User, Post, Hashtag } = require('../models');
 
 const router = express.Router();
 
-router.use(deprecated);
+// router.use(cors({
+//   credentials: true
+// }))
+router.use(async (req, res, next) => {
+  const domain = await Domain.findOne({
+    where: { host: url.parse(req.get('origin')).host },
+  });
 
-router.post('/token', async (req, res) => {
+  if(domain) {
+    cors({
+      origin: req.get('origin'),
+      credentials: true,
+    })(req, res, next)
+  } else {
+    next();
+  }
+})
+
+router.post('/token', apiLimiter, async (req, res) => {
   // 전달받은 클라이언트 비밀 키로 도메인이 등록된 것인지를 먼저 확인.
   // 등록 되지 않았다면 에러를 보내고 등록된 도메인이면 토큰을 발급해 응답한다. 
 
@@ -34,7 +52,7 @@ router.post('/token', async (req, res) => {
       id: domain.User.id,
       nick: domain.User.nick
     }, process.env.JWT_SECRET, {
-      expiresIn: '1m',
+      expiresIn: '30m',
       issuer: 'nodebird',
     });
     // sign 의 첫 번째 인수는 토큰의 내용
@@ -56,7 +74,7 @@ router.post('/token', async (req, res) => {
   }
 })
 
-router.get('/posts/my', verifyToken, (req, res) => {
+router.get('/posts/my', apiLimiter, verifyToken, (req, res) => {
   Post.findAll({ where: { userId: req.decoded.id } })
     .then((posts) => {
       console.log(posts);
@@ -74,7 +92,7 @@ router.get('/posts/my', verifyToken, (req, res) => {
     });
 });
 
-router.get('/posts/hashtag/:title', verifyToken, async (req, res) => {
+router.get('/posts/hashtag/:title', verifyToken, apiLimiter, async (req, res) => {
   try {
     const hashtag = await Hashtag.findOne({ where: { title: req.params.title } });
     if(!hashtag) {
@@ -101,7 +119,7 @@ router.get('/posts/hashtag/:title', verifyToken, async (req, res) => {
 })
 
 // 토큰을 검증하는 미들웨어를 거친 후, 검증이 성공하면 토큰의 내용물을 응답하는 라우터
-router.get('/test', verifyToken, (req, res) => {
+router.get('/test', verifyToken, apiLimiter, (req, res) => {
   console.log('req.decoded', req.decoded)
   res.json(req.decoded);
 })

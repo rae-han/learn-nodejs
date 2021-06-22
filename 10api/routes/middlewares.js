@@ -39,7 +39,7 @@ exports.verifyToken = (req, res, next) => {
 
 exports.apiLimiter = new RateLimit({
   windowMs: 60 * 1000,
-  max: 2,
+  max: 5,
   handler(req, res) {
     res.status(this.statusCode).json({
       code: this.statusCode,

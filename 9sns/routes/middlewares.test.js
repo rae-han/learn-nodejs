@@ -28,7 +28,7 @@ describe('isLoggedIn', () => {
 
 describe('isNotLoggedIn', () => {
   test('로그인되어 있으면 isNotLoggedIn 에러를 응답해야 함', () => {
-
+    
   })
 
   test('로그인되어 있지 않으면 isNotLoggedIn next를 호출해야 함', () => {

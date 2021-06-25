@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "9sns",
+			"path": "9sns"
+		},
+		{
+			"name": "10api",
+			"path": "10api"
+		},
+		{
+			"name": "10nodecat",
+			"path": "10nodecat"
+		}
+	],
+  "settings": {}
+}

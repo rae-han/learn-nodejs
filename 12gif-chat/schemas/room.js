@@ -14,12 +14,12 @@ const roomSchema = new Schema({
   },
   owner: {
     type: String,
-    required: true
+    required: true,
   },
   password: String,
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
 });
 

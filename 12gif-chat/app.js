@@ -19,7 +19,7 @@ nunjucks.configure('views', {
   express: app,
   watch: true,
 });
-// connect();
+connect();
 
 const sessionMiddleware = session({
   resave: false,

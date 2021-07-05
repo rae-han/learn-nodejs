@@ -134,7 +134,7 @@ router.post('/room/:id/gif', upload.single('gif'), async (req, res, next) => {
   }
 })
 
-const test = require('../test');
+const test = require('../websocket');
 router.use('/test', test);
 
 module.exports = router;

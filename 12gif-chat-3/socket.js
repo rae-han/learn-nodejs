@@ -1,27 +1,36 @@
-const WebSocket = require('ws');
+const SocketIO = require('socket.io');
 
 module.exports = (server) => {
-  const wss = new WebSocket.Server({ server });
+  const io = SocketIO(server, { path: '/socket.io' }); 
+  // # option
+  // - path: 클라이언트가 접속할 경로, 클라이언트에서도 이 경로와 일치하는 path를 넣어야 한다.
 
-  wss.on('connection', (ws, req) => { // 웹소켓 연결 시
+  io.on('connection', (socket) => {
+    const req = socket.request; 
+    // 요청 객체에 접근
+    // 응갑 객체는 socket.request.res 로 접근
+    // socket.id로 소켓 고유의 아이디를 가져올 수 있다.
+    // console.log('req: ', req);
+    // console.log(req.res);
+    console.log(socket.id)
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    console.log('새로운 클라이언트 접속', ip);
-    ws.on('message', (message) => { // 클라이언트로부터 메시지
-      console.log(message);
-    });
-    ws.on('error', (error) => { // 에러 시
-      console.error(error);
-    });
-    ws.on('close', () => { // 연결 종료 시
-      console.log('클라이언트 접속 해제', ip);
-      clearInterval(ws.interval);
-    });
+    console.log('req.headers["x-forwarded-for"], req.connection.remoteAddress', req.headers['x-forwarded-for'], req.connection.remoteAddress)
+    console.log('ip: ', ip)
 
-    ws.interval = setInterval(() => { // 3초마다 클라이언트로 메시지 전송
-      if (ws.readyState === ws.OPEN) {
-        ws.send('서버에서 클라이언트로 메시지를 보냅니다.');
-        console.log(new Date().getTime());
-      }
-    }, 3000);
-  });
+    console.log('새로운 클라이언트 접속!', ip, socket.id, req.ip);
+
+    socket.on('disconnect', () => {
+      console.log('클라이언트 접속 해제', ip, socket.id);
+      clearInterval(socket.interval);
+    })
+
+    socket.on('reply', (data) => { // reply는 사용자가 직접 만든 이벤트.
+      console.log(data);
+      console.log(new Date().getTime());
+    })
+
+    socket.interval = setInterval(() => {
+      socket.emit('news', 'Hello Socket.IO')
+    }, 4000)
+  })
 };

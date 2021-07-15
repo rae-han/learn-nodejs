@@ -48,14 +48,20 @@ module.exports = (server, app, sessionMiddleware) => {
 
     socket.on('disconnect', () => {
       console.log('chat 네임스페이스 접속 해제');
-      
-      socket.leave(roomId)
 
       socket.leave(roomId);
+
       const currentRoom =socket.adapter.rooms[roomId];
       const userCount = currentRoom ? currentRoom.length : 0;
       if(userCount === 0) { // 접속자가 0명이면 방 삭제
-        axios.delete(`http://localhost:8005/room/${roomId}`)
+        const signedCookie = req.signedCookies['connect.sid']; // 쿠키들이 복호화 돼 있기 때문에 다시 암호화 해야한다.
+        const connectSID = cookie.sign(signedCookie, process.env.COOKIE_SECRET);
+
+        axios.delete(`http://localhost:8005/room/${roomId}`, {
+          headers: {
+            Cookie: `connect.sid=s%3A${connectSID}`
+          }
+        })
           .then(() => {
             console.log('방 제거 요청 성공')
           })

@@ -23,12 +23,7 @@ nunjucks.configure('views', {
 
 connect();
 
-app.use(morgan('dev'));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(session({
+const sessionMiddleware = session({ // app과 socket에 session을 공유하기 위해 변수로 분리
   resave: false,
   saveUninitialized: false,
   secret: process.env.COOKIE_SECRET,
@@ -36,7 +31,14 @@ app.use(session({
     httpOnly: true,
     secure: false,
   },
-}));
+})
+
+app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(sessionMiddleware);
 
 app.use((req, res, next) => {
   if(!req.session.color) {
@@ -65,4 +67,4 @@ const server = app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기중');
 });
 
-webSocket(server, app);
+webSocket(server, app, sessionMiddleware);

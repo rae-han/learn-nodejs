@@ -19,6 +19,7 @@ nunjucks.configure('views', {
   express: app,
   watch: true,
 });
+console.log(1, '몽고 디비 연결 전')
 connect();
 
 const sessionMiddleware = session({

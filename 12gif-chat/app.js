@@ -21,6 +21,7 @@ nunjucks.configure('views', {
 });
 console.log(1, '몽고 디비 연결 전')
 connect();
+console.log(1, '몽고 디비 연결 후')
 
 const sessionMiddleware = session({
   resave: false,
@@ -34,6 +35,9 @@ const sessionMiddleware = session({
 
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
+// public  폴더를 /를 통해 접근 가능하게 해준다.
+console.log(2, 'dir', path.join(__dirname, 'public'));
+console.log(2, 'dir', express.static(path.join(__dirname, 'public')))
 app.use('/gif', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -76,4 +80,5 @@ const server = app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기중');
 });
 
+console.log(3, '웹 소켓 연결')
 webSocket(server, app, sessionMiddleware);

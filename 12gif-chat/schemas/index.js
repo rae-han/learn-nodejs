@@ -4,7 +4,8 @@ const { MONGO_ID, MONGO_PASSWORD, NODE_ENV } = process.env;
 const MONGO_URL = `mongodb://${MONGO_ID}:${MONGO_PASSWORD}@localhost:27017/admin`;
 
 const connect = () => {
-  console.log(NODE_ENV)
+  console.log(1, 'MONGO_URL', MONGO_URL)
+  console.log('NODE ENV', NODE_ENV)
   if (NODE_ENV !== 'production') {
     mongoose.set('debug', true);
   }

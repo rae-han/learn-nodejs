@@ -9,6 +9,7 @@ const Chat = require('../schemas/chat');
 const router = express.Router();
 
 try {
+  console.log('uploads 폴더 존재')
   fs.readdirSync('uploads');
 } catch (error) {
   console.error(error);
@@ -30,6 +31,7 @@ const upload = multer({
 });
 
 router.get('/', async (req, res, next) => {
+  console.log(0, '채팅방 랜더')
   try {
     const rooms = await Room.find({});
     res.render('main', { rooms, title: 'GIF 채팅방' });

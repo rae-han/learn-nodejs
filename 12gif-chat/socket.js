@@ -13,8 +13,11 @@ module.exports = (server, app, sessionMiddleware) => {
   // console.log(app)
   // console.log(sessionMiddleware)
   const io = SocketIO(server, { path: '/socket.io' });
+  console.log(3, 'socket.io 패키지를 불러와서 익스프레스 서버와 연결')
+
 
   app.set('io', io);
+  console.log(3, 'io 객체를 ')
 
   const room = io.of('/room');
   const chat = io.of('/chat');
@@ -23,13 +26,17 @@ module.exports = (server, app, sessionMiddleware) => {
     // sessionMiddleware(socket.request, socket.request.res, next);
     cookieParser(process.env.COOKIE_SECRET)(socket.request, socket.request.res, next);
     sessionMiddleware(socket.request, socket.request.res, next);
+    console.log(4, 'socket.request 속성으로 요청 객체에, socket.request.res로 응답 객체에 접근할 수 있다.')
   })
 
   room.on(CONNECTION, (socket) => {
-    console.log('room 네임스페이스에 접속');
+    console.log(5, 'room 네임스페이스에 접속');
+    console.log(5, '연결 후에는 이벤트 리스너를 붙인다.')
+    console.log(5, 'connection 이벤트는 클라이언트가 접속했을 때 발생하고 콜백으로 소켓 객체(socket)을 제공한다.')
+    console.log(5, 'io 객체와 socket 객체가 Socket.IO의 핵심')
 
     socket.on(DISCONNECT, () => {
-      console.log('room 네임스페이스 접속 해제');
+      console.log(6, 'room 네임스페이스 접속 해제');
     });
   });
 

@@ -78,6 +78,41 @@ router.get('/room/:id', async (req, res, next) => {
       return res.redirect('/?error=비밀번호가 틀렸습니다.');
     }
     const { rooms } = io.of('/chat').adapter;
+    console.log(7.4, room)
+    console.log(7.4, `io.of('/chat').adapter.rooms 에 방 목록이 있다.`)
+    console.log(7.4, rooms)
+    // ?
+    // {
+    //   '60f80d413866134c8bf13731': Room { sockets: { '/chat#vCHCFxrTpPU4nm8pAAAD': true }, length: 1 },
+    //   '/chat#vCHCFxrTpPU4nm8pAAAD': Room { sockets: { '/chat#vCHCFxrTpPU4nm8pAAAD': true }, length: 1 }
+    // }
+    // 2명일때
+    // {
+    //   '60f80d413866134c8bf13731': Room {
+    //     sockets: {
+    //       '/chat#rnqV0disDIsOiNr3AAAC': true,
+    //       '/chat#CBi2h6pF4VayataKAAAH': true
+    //     },
+    //     length: 2
+    //   },
+    //   '/chat#rnqV0disDIsOiNr3AAAC': Room { sockets: { '/chat#rnqV0disDIsOiNr3AAAC': true }, length: 1 },
+    //   '/chat#CBi2h6pF4VayataKAAAH': Room { sockets: { '/chat#CBi2h6pF4VayataKAAAH': true }, length: 1 }
+    // }
+    // 3명일때
+    // {
+    //   '60f80d413866134c8bf13731': Room {
+    //     sockets: {
+    //       '/chat#PojUPhA8NFLFEuUtAAAc': true,
+    //       '/chat#d5cYzQFAQ6zjzUaNAAAd': true,
+    //       '/chat#y20bANT_c7uXJVLYAAAv': true
+    //     },
+    //     length: 3
+    //   },
+    //   '/chat#PojUPhA8NFLFEuUtAAAc': Room { sockets: { '/chat#PojUPhA8NFLFEuUtAAAc': true }, length: 1 },
+    //   '/chat#d5cYzQFAQ6zjzUaNAAAd': Room { sockets: { '/chat#d5cYzQFAQ6zjzUaNAAAd': true }, length: 1 },
+    //   '/chat#y20bANT_c7uXJVLYAAAv': Room { sockets: { '/chat#y20bANT_c7uXJVLYAAAv': true }, length: 1 }
+    // }
+    console.log(7.4, req.params.id)
     if (rooms && rooms[req.params.id] && room.max <= rooms[req.params.id].length) {
       return res.redirect('/?error=허용 인원이 초과하였습니다.');
     }

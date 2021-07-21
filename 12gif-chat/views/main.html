@@ -37,11 +37,17 @@
 </fieldset>
 <script src="/socket.io/socket.io.js"></script>
 <script>
+  console.log(7.1, '채팅방 뷰 랜더')
+
   const socket = io.connect('http://localhost:8005/room', { // 네임스페이스
     path: '/socket.io',
   });
 
+  console.log(7.1, 'socket /room')
+  console.log(7.1, socket)
+
   socket.on('newRoom', function (data) { // 새 방 이벤트 시 새 방 생성
+    console.log(7.2, '새 방 생성');
     const tr = document.createElement('tr');
     let td = document.createElement('td');
     td.textContent = data.title;
@@ -69,6 +75,7 @@
   });
 
   socket.on('removeRoom', function (data) { // 방 제거 이벤트 시 id가 일치하는 방 제거
+    console.log(7.2, '방 제거');
     document.querySelectorAll('tbody tr').forEach(function (tr) {
       if (tr.dataset.id === data) {
         tr.parentNode.removeChild(tr);
@@ -77,6 +84,7 @@
   });
 
   function addBtnEvent(e) { // 방 입장 클릭 시
+    console.log(7.2, '방 입장');
     if (e.target.dataset.password === 'true') {
       const password = prompt('비밀번호를 입력하세요');
       location.href = '/room/' + e.target.dataset.id + '?password=' + password;
@@ -86,6 +94,7 @@
   }
 
   document.querySelectorAll('.join-btn').forEach(function (btn) {
+    console.log(7.2, '방 입장 클릭');
     btn.addEventListener('click', addBtnEvent);
   });
 </script>

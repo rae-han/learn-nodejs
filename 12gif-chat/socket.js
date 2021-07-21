@@ -7,6 +7,7 @@ const axios = require('axios');
 
 const CONNECTION = 'connection';
 const DISCONNECT = 'disconnect';
+const EVENT = 'event';
 
 module.exports = (server, app, sessionMiddleware) => {
   // console.log(server)
@@ -34,6 +35,11 @@ module.exports = (server, app, sessionMiddleware) => {
     console.log(5, '연결 후에는 이벤트 리스너를 붙인다.')
     console.log(5, 'connection 이벤트는 클라이언트가 접속했을 때 발생하고 콜백으로 소켓 객체(socket)을 제공한다.')
     console.log(5, 'io 객체와 socket 객체가 Socket.IO의 핵심')
+
+    socket.on(EVENT, data => {
+      console.log(6, 'room 네임스페이스 이벤트 발생')
+      console.log(data)
+    })
 
     socket.on(DISCONNECT, () => {
       console.log(6, 'room 네임스페이스 접속 해제');

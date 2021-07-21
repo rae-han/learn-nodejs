@@ -34,6 +34,9 @@ router.get('/', async (req, res, next) => {
   console.log(0, '채팅방 랜더')
   try {
     const rooms = await Room.find({});
+    console.log(7, '채팅방 목록 호출');
+    console.log(7, rooms)
+
     res.render('main', { rooms, title: 'GIF 채팅방' });
   } catch (error) {
     console.error(error);
@@ -42,6 +45,7 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/room', (req, res) => {
+  console.log(7.2, 'GIF 채팅방 생성')
   res.render('room', { title: 'GIF 채팅방 생성' })
 })
 
@@ -55,6 +59,7 @@ router.post('/room', async (req, res, next) => {
     });
     const io = req.app.get('io');
     io.of('/room').emit('newRoom', newRoom);
+    console.log(7.2, 'newRoom', newRoom)
     res.redirect(`/room/${newRoom._id}?password=${req.body.password}`);
   } catch (error) {
     console.error(error);
@@ -92,6 +97,7 @@ router.get('/room/:id', async (req, res, next) => {
 });
 
 router.delete('/room/:id', async (req, res, next) => {
+  console.log(7.3, 'GIF 채팅팡 삭제')
   try {
     await Room.remove({ _id: req.params.id });
     await Chat.remove({ room: req.params.id });

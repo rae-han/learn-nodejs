@@ -77,6 +77,7 @@ router.get('/room/:id', async (req, res, next) => {
     if (room.password && room.password !== req.query.password) {
       return res.redirect('/?error=비밀번호가 틀렸습니다.');
     }
+    console.log(7.4, `io.of('/chat').adapter`, io.of('/chat').adapter)
     const { rooms } = io.of('/chat').adapter;
     console.log(7.4, room)
     console.log(7.4, `io.of('/chat').adapter.rooms 에 방 목록이 있다.`)

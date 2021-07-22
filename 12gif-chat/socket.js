@@ -54,6 +54,8 @@ module.exports = (server, app, sessionMiddleware) => {
       .split('/')[referer.split('/').length -1]
       .replace(/\?.+/, '');
     socket.join(roomId);
+    console.log(8, referer)
+    console.log(8, roomId)
 
     socket.to(roomId).emit('join', {
       user: 'system',

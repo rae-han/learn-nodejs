@@ -34,6 +34,9 @@
   </table>
   <div class="error-message">{{error}}</div>
   <a href="/room">채팅방 생성</a>
+  <div>
+    <button class="alarm">대기실 알림</button>
+  </div>
 </fieldset>
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -97,6 +100,17 @@
     console.log(7.2, '방 입장 클릭');
     btn.addEventListener('click', addBtnEvent);
   });
+
+  socket.on('serverAlarm', function (data) {
+    console.log('server alarm');
+  })
+  socket.on('clientAlarm', function (data) {
+    console.log('clientAlarm alarm');
+  })
+  
+  document.querySelector('.alarm').addEventListener('click', () => {
+    socket.emit('clientAlarm', 'data');
+  })
 </script>
 {% endblock %}
 

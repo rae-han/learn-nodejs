@@ -26,4 +26,11 @@ router.get('/', (req, res, next) => {
   });
 });
 
+router.get('/test', (req, res) => {
+  // res.json({ test: 'test' })
+  res.write('<div>test</div>')
+  // res.write('test')
+  return;
+})
+
 module.exports = router;

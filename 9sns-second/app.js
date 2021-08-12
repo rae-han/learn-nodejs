@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  console.log('Error Function.')
+  console.log('Error Function.');
   res.locals.message = err.message;
   res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
   res.status(err.status || 500);
@@ -52,6 +52,7 @@ app.use((err, req, res, next) => {
 app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기중');
 })
+
 
 // app.listen(app.get('port', () => {
 //   console.log(app.get('port'), ' 번 포트에서 대기 중')

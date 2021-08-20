@@ -14,4 +14,4 @@ fs.writeFile('./writeme.txt', random)
   })
   .catch((error) => {
     console.log(error)
-  })
+  }) 

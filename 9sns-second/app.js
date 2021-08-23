@@ -41,6 +41,10 @@ app.use((req, res, next) => {
   next(error);
 });
 
+app.use((req, res, next) => {
+  console.log('Middleware.')
+})
+
 app.use((err, req, res, next) => {
   console.log('Error Function.');
   res.locals.message = err.message;

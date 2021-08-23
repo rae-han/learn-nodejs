@@ -52,22 +52,3 @@ app.use((err, req, res, next) => {
 app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기중');
 })
-
-
-// app.listen(app.get('port', () => {
-//   console.log(app.get('port'), ' 번 포트에서 대기 중')
-// }))
-// /Users/raehan/Documents/develop/learn/nodejs/node-textbook/9sns-second/node_modules/express/lib/router/index.js:139
-//   debug('dispatching %s %s', req.method, req.url);
-//                                  ^
-
-// TypeError: Cannot read property 'method' of undefined
-//     at Function.handle (/Users/raehan/Documents/develop/learn/nodejs/node-textbook/9sns-second/node_modules/express/lib/router/index.js:139:34)
-//     at Function.handle (/Users/raehan/Documents/develop/learn/nodejs/node-textbook/9sns-second/node_modules/express/lib/application.js:174:10)
-//     at Server.app (/Users/raehan/Documents/develop/learn/nodejs/node-textbook/9sns-second/node_modules/express/lib/express.js:39:9)
-//     at Object.onceWrapper (events.js:421:28)
-//     at Server.emit (events.js:315:20)
-//     at emitListeningNT (net.js:1352:10)
-//     at processTicksAndRejections (internal/process/task_queues.js:79:21)
-// [nodemon] app crashed - waiting for file changes before starting...
-

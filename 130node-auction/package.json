@@ -9,7 +9,7 @@
   "author": "raehan",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.7",
+    "bcrypt": "^3.0.8",
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

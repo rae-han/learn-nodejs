@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const formData = new FormData();
+    console.log(formData);
+
+    formData.append('name', 'raehan');
+    formData.append('color', 'blue');
+    formData.append('color', 'red');
+    console.log(formData);
+
+    console.log(formData.has('color')); // t
+    console.log(formData.has('food')); // f
+
+    console.log(formData.get('color'));
+    console.log(formData.getAll('color'));
+    
+    formData.append('test', ['arr', 'ay']);
+    console.log(formData.get('test'));
+    formData.delete('test');
+    console.log(formData.get('test'));
+    formData.set('color', 'yellow');
+    console.log(formData.getAll('color'));
+
+    const text = '노드';
+    const encodeText = encodeURIComponent(text);
+    console.log(encodeText);
+    const decodeText = decodeURIComponent(encodeText);
+    console.log(decodeText);
+  </script>
+</body>
+</html>

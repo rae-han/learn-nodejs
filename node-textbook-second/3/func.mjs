@@ -1,7 +1,7 @@
-const { odd, even } = require('./var');
+import { odd, even } from './var';
 
 function checkOddOrEven(num) {
-  console.log('func.js')
+  console.log('func.mjs')
   if(num%2) {
     return odd;
   } else {
@@ -9,4 +9,4 @@ function checkOddOrEven(num) {
   }
 }
 
-module.exports = checkOddOrEven;
+export default checkOddOrEven;

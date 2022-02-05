@@ -1,6 +1,12 @@
 const express = require('express');
 const path = require('path');
+// npm i morgan cookie-parser express-session dotenv
+const morgan = require('morgan')
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const dotenv = require('dotenv');
 
+dotenv.config();
 const app = express();
 app.set('port', process.env.PORT || 3000);
 
@@ -17,8 +23,6 @@ app.get('/', (req, res, next) => {
 }, (req, res, next) => {
   console.log('get / second middleware');
   next();
-}, (req, res) => {
-  throw new Error('에러는 에러 처리 미들웨어로 간다.')
 });
 
 app.get('/', (req, res) => {

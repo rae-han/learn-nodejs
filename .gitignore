@@ -7,7 +7,7 @@ nodejs-book-master
 node-textbook-sourcecode
 ./node-textbook-sourcecode
 
-/node_modules/
+node_modules
 */node_modules
 */node_modules/
 */node_modules/*

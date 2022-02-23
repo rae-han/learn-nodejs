@@ -11,6 +11,8 @@ const func = async () => {
   let willSendthis = await zip.toBuffer(() => {
     console.log('success');
   });
+
+  willSendthis
   
   let res = await zip.writeZip('./ziped/ziped.zip');
   console.log(res)

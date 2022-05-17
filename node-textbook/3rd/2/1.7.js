@@ -59,3 +59,4 @@ const promise2 = Promise.resolve('성공!!');
 })();
 // 성공!
 // 성공!!
+

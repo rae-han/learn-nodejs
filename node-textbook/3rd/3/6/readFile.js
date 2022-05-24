@@ -5,7 +5,7 @@ fs.readFile('./readme.txt', (err, data) => {
     throw err;
   }
 
-  console.log(data);
-  console.log(typeof data);
-  console.log(data.toString());
+  console.log(data); // <Buffer eb 82 ... 2e>
+  console.log(typeof data); // object
+  console.log(data.toString()); // 나를 읽어주세요.
 })
